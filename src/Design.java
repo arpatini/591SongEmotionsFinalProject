@@ -3,7 +3,7 @@ import javax.swing.SwingUtilities;
 
 public class Design {
 	
-	//creates the JFrame
+	//creates the JFrame using MainFrame
 	
 	public static void main(String[] args) {
 		
