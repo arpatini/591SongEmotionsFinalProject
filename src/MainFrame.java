@@ -22,20 +22,25 @@ import javax.swing.JTextField;
 
 public class MainFrame extends JFrame {
 	
+	public static JButton button;
+	public static JTextArea sadResults;
+	public JTextField songTextBox;
+	public JTextField artistTextBox;
+
 	public MainFrame(String title) {
 		super(title);
 		
 		setLayout(new FlowLayout());
 		
 		//creates song search toolbar
-		JTextField songTextBox = new JTextField(20);
+		songTextBox = new JTextField(20);
 		JLabel songSearch = new JLabel("Song Name", JLabel.CENTER);
 		
 		//creates artist search toolbar
-		JTextField artistTextBox = new JTextField(20);
+		artistTextBox = new JTextField(20);
 		JLabel artistSearch = new JLabel("Artist Name", JLabel.CENTER);
 		
-		JButton button = new JButton("How sad is this song?");
+		button = new JButton("How sad is this song?");
 		
 		JTextArea sadFaces1 = new JTextArea(
 				":( :( :( :( :( :( :( :( :( :( :( :( :( :( :( :( :( :( :( :( ");
@@ -44,7 +49,7 @@ public class MainFrame extends JFrame {
 				":( :( :( :( :( :( :( :( :( :( :( :( :( :( :( :( :( :( :( :( ");
 		sadFaces2.setEditable(false);
 		
-		JTextArea sadResults = new JTextArea(20,50);
+		sadResults = new JTextArea(20,50);
 		sadResults.setLineWrap(true);
 		sadResults.setEditable(false);
 		
@@ -52,7 +57,9 @@ public class MainFrame extends JFrame {
 		
 		/**
 		 * creates list of options as the user types song name so that they can scroll if 
-		 * they've typed enough 
+		 * they've typed enough
+		 * 
+		 *  need to put words from what they click on in each text box
 		 */
 		songTextBox.addActionListener(new ActionListener() {
 
@@ -68,6 +75,8 @@ public class MainFrame extends JFrame {
 		/**
 		 * creates list of options as the user types artist name so that they can scroll if 
 		 * they've typed enough 
+		 * 
+		 * need to put words from what they click on in each text box
 		 */
 		artistTextBox.addActionListener(new ActionListener() {
 
@@ -84,7 +93,7 @@ public class MainFrame extends JFrame {
 		/**
 		 * if song is not an option, tells user it hasn't heard of this song
 		 * 
-		 * calls Yang's classes to see how sad song is
+		 * calls Andrew's classes to pass lyrics from this song to Yang
 		 * 
 		 * tells user how sad the song is
 		 */
@@ -95,10 +104,18 @@ public class MainFrame extends JFrame {
 				String songName = songTextBox.getText();
 				String artistName = artistTextBox.getText();
 				
-				//input these to method that performs algorithm and get sadness text back
+				//input these to method that gets lyrics and pass those to Yang and 
+				//get sadness text back
 				
-				//temporary resutls until Yang writes method to return this
-				sadResults.append(songName + " by " + artistName +  " is this level of sad..");
+				if (songName.equals("") && artistName.contentEquals("")) {
+					sadResults.append("Please type an actual song.");
+				} else {
+					//temporary resutls until Yang writes method to return this
+					sadResults.append(songName + " by " + artistName +  " is this level of sad..");
+				}
+				
+				
+				
 				
 			}
 			

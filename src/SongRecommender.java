@@ -1,32 +1,35 @@
+import java.util.ArrayList;
+
 import javax.swing.JList;
 
 public class SongRecommender {
 	
 	/**
-	 * gives songs with similar titles if 
-	 * not given exact song with exact artist
+	 * returns list of songs with their artist when typing song name
 	 * 
-	 * let's user select or retype(runs songInput again)
-	 * 
-	 * outputs exact name and title to be used by Andrew to get lyrics
-	 * and give them to Yang
+	 * outputs String[]
 	 */
 	
-	private void createListOfSongs(int i, String typedword) {
-		
+	private void createListOfSongsFromSong(String wordBeingTyped) {
+
+	}
+	
+	/**
+	 * returns list of songs with their artist when typing artist name
+	 * 
+	 * outputs String[]
+	 */
+	
+	private void createListOfSongsFromArtist(String wordBeingTyped) {
+
 	}
 	
 	
-	//creates a JList from database of songs for user to scroll through as they are typing song name
+	//creates a JList from above list for user to scroll through as they are typing 
 	//outputs JList
-	public void createListOfSongs(String songBeingTyped) {
-	//	createListOfSongs(int that looks through song part of dataset, songBeingTyped);
+	public void createJListOfSongs(String[] listOfSongsAndArtistsThatMatch) {
+	//	creates JList to pass to songTextBox.ActionListener and artistTextBox.ActionListener;
 	}
-	
-	//creates a JList from database of songs for user to scroll through as they are typing artist name
-	//outputs JListx
-	public void createListOfSongsWhenArtistBeingTyped(String artistBeingTyped) {
-//		createListOfSongs(int that looks through artist part of dataset, artistBeingTyped);
-	}
+
 
 }
