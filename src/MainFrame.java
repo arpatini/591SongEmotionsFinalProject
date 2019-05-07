@@ -1,19 +1,23 @@
-import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 
 // creates a layout for JFrame and adds two text boxes and a search button
@@ -26,8 +30,12 @@ public class MainFrame extends JFrame {
 	public static JTextArea sadResults;
 	public JTextField songTextBox;
 	public JTextField artistTextBox;
+	
+	
 
 	public MainFrame(String title) {
+		
+		
 		super(title);
 		
 		setLayout(new FlowLayout());
@@ -53,6 +61,35 @@ public class MainFrame extends JFrame {
 		sadResults.setLineWrap(true);
 		sadResults.setEditable(false);
 		
+		/**
+		 * adds buttons and text boxes to frame
+		 */
+		
+		Container c = getContentPane();
+		c.setFocusable(true);
+		JPanel search = new JPanel();
+		search.add(songSearch);
+		search.add(songTextBox);
+		search.add(artistSearch);
+		search.add(artistTextBox);
+		
+		JPanel sadButton = new JPanel();
+		sadButton.add(sadFaces1);
+		sadButton.add(button);
+		sadButton.add(sadFaces2);
+		
+		JPanel results = new JPanel();
+		results.add(sadResults);
+		
+		JScrollPane pane = new JScrollPane();
+		pane.setVisible(true);
+		
+		c.add(search);
+		c.add(pane);
+		c.add(sadButton);
+		c.add(results);
+		
+		
 		
 		
 		/**
@@ -61,15 +98,60 @@ public class MainFrame extends JFrame {
 		 * 
 		 *  need to put words from what they click on in each text box
 		 */
-		songTextBox.addActionListener(new ActionListener() {
-
+		songTextBox.addKeyListener(new KeyListener() {
+			
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+			public void keyPressed(KeyEvent keyEvent) {
+				ArrayList<String> list = new ArrayList<String>();
+				
+				try {
+					list = SongRecommender.createListOfSongsFromSong(songTextBox.getText());
+					JList<String> jlist = new JList<String>();
+					
+					if (list.size() > 0) {
+						
+						pane.add(jlist);
+						jlist = SongRecommender.createJListOfSongs(list);
+						jlist.setVisible(true);
+						jlist.setFocusable(true);
+					    jlist.requestFocus();
+						search.add(pane);
+						
+						jlist.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+						//jlist.addListSelectionListener(new ListSelectionListener() {
+
+				           // @Override
+				            //public void valueChanged(ListSelectionEvent arg0) {
+				            //	String text = jlist.getSelectedValue().toString();
+				            //    if (!arg0.getValueIsAdjusting()) {
+				             //     songTextBox.setText(text);
+				              //    jlist.setVisible(false);
+				             //   }
+				            //}
+						//});
+					}
+						
+					
+				} catch (IOException e) {
+					songTextBox.setText("Please try again.");
+				}
+				
+		      }
+			
+			@Override
+			public void keyReleased(KeyEvent keyEvent) {
 				
 			}
 
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
 		});
+	
+				
+				
+				
 		
 		
 		/**
@@ -124,28 +206,6 @@ public class MainFrame extends JFrame {
 		
 		
 		
-		/**
-		 * adds buttons and text boxes to frame
-		 */
-		
-		Container c = getContentPane();
-		JPanel search = new JPanel();
-		search.add(songSearch);
-		search.add(songTextBox);
-		search.add(artistSearch);
-		search.add(artistTextBox);
-		
-		JPanel sadButton = new JPanel();
-		sadButton.add(sadFaces1);
-		sadButton.add(button);
-		sadButton.add(sadFaces2);
-		
-		JPanel results = new JPanel();
-		results.add(sadResults);
-		
-		c.add(search);
-		c.add(sadButton);
-		c.add(results);
 		
 
 	}
