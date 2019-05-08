@@ -19,12 +19,12 @@ import java.util.*;
 public class SongRecommender {
 	
 	/**
-	 * returns list of songs with their artist when typing song name
+	 * returns list of songs with their artist when typing in search
 	 * 
 	 * outputs String[]
 	 */
 	
-	public static ArrayList<String> createListOfSongsFromSong(String wordBeingTyped) throws IOException{
+	public static ArrayList<String> createListOfSongs(String wordBeingTyped) throws IOException{
 		ArrayList<String> matchingSongs = new ArrayList<String>();
 		
 		wordBeingTyped.replaceAll(" ", "+");
@@ -54,49 +54,7 @@ public class SongRecommender {
 	    return matchingSongs;
 
 	}
-	
-	/**
-	 * returns list of songs with their artist when typing artist name
-	 * 
-	 * outputs String[]
-	 */
-	
-	public ArrayList<String> createListOfSongsFromArtist(String wordBeingTyped) {
-		ArrayList<String> matchingArtists = new ArrayList<String>();
-		
-		
-		return matchingArtists;
 
-	}
-	
-	
-	//creates a JList from above list for user to scroll through as they are typing 
-	//outputs JList
-	public static JList createJListOfSongs(ArrayList<String> listOfSongsAndArtistsThatMatch) {
-	//	creates JList to pass to songTextBox.ActionListener and artistTextBox.ActionListener;
-		
-		DefaultListModel<String> dlm = new DefaultListModel<String>();
-		JList<String> listOfOptions = new JList<>(dlm);
-		for (String song : listOfSongsAndArtistsThatMatch) {
-			dlm.addElement(song);
-			listOfOptions.setModel(dlm);
-
-		}
-
-		
-		
-		
-		return listOfOptions;
-	}
-	
-	public static void main(String[] args) {
-		try {
-			createJListOfSongs(createListOfSongsFromSong("listen"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 
 }
