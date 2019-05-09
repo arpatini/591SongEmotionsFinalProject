@@ -19,8 +19,8 @@ public class Search {
 		String lyrics ="";
 		
         //We strip song name and artist name of all punctuation
-        String songNameClean = songName.replaceAll("[^a-zA-Z]+", "").toLowerCase();
-        String artistNameClean = artistName.replaceAll("[^a-zA-Z]+", "").toLowerCase();
+        String songNameClean = songName.replaceAll("[^a-zA-Z0-9]+", "").toLowerCase();
+        String artistNameClean = artistName.replaceAll("[^a-zA-Z0-9]+", "").toLowerCase();
         
 	    String searchLink = "https://www.azlyrics.com/lyrics/"+artistNameClean+"/"+songNameClean+".html";	    
 		Document lyricPage = Jsoup.connect(searchLink).get();
