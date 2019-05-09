@@ -6,38 +6,26 @@ class MainFrameTest {
 
 	@Test
 	void testButtonNothingTyped() {
-		MainFrame mf = new MainFrame("Song Sadness Scale");
+		MainFrame mf = new MainFrame("Song Emotion Scale");
 		mf.button.doClick();
-		System.out.println(mf.sadResults.getText());
-		assertEquals(mf.sadResults.getText(), "Please type an actual song.");	
+		assertEquals(mf.sadResults.getText(), "We don't recognize that song, please try again.");	
 	}
 	
 	@Test
-	void testButtonSongTyped() {
-		MainFrame mf = new MainFrame("Song Sadness Scale");
+	void testButtonOnlySongTyped() {
+		MainFrame mf = new MainFrame("Song Emotion Scale");
 		mf.songTextBox.setText("Where Does The Good Go");
 		mf.button.doClick();
-		System.out.println(mf.sadResults.getText());
-		assertEquals(mf.sadResults.getText(), "Where Does The Good Go by  is this level of sad..");	
+		assertEquals(mf.sadResults.getText(), "We don't recognize that song, please try again.");	
 	}
 	
 	@Test
-	void testButtonArtistTyped() {
-		MainFrame mf = new MainFrame("Song Sadness Scale");
+	void testButtonOnlyArtistTyped() {
+		MainFrame mf = new MainFrame("Song Emotion Scale");
 		mf.artistTextBox.setText("Tegan and Sara");
 		mf.button.doClick();
-		System.out.println(mf.sadResults.getText());
-		assertEquals(mf.sadResults.getText(), " by Tegan and Sara is this level of sad..");	
+		assertEquals(mf.sadResults.getText(), "We don't recognize that song, please try again.");	
 	}
 	
-	@Test
-	void testButtonBothTyped() {
-		MainFrame mf = new MainFrame("Song Sadness Scale");
-		mf.songTextBox.setText("Where Does The Good Go");
-		mf.artistTextBox.setText("Tegan and Sara");
-		mf.button.doClick();
-		System.out.println(mf.sadResults.getText());
-		assertEquals(mf.sadResults.getText(), "Where Does The Good Go by Tegan and Sara is this level of sad..");	
-	}
 
 }

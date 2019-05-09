@@ -1,8 +1,8 @@
 import java.awt.BorderLayout;
+
+
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,18 +17,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.html.parser.ParserDelegator;
 
 
-// creates a layout for JFrame and adds two text boxes and a search button
 
-//then sends song name and artist name to Andrew 
+/**
+ * 
+ * @author angelapatini
+ * 
+ * creates a layout for JFrame and adds two text boxes and a search button
+ *
+ *runs song name and artist name through Andrew's code to get lyrics to run and return's answer
+
+ */
 
 public class MainFrame extends JFrame {
 	
@@ -36,7 +40,6 @@ public class MainFrame extends JFrame {
 	public static JTextArea sadResults;
 	public JTextField songTextBox = new JTextField();
 	public JTextField artistTextBox;
-	private DefaultListModel modelList;
 	JList<String> jlist = new JList<String>();
 	DefaultListModel<String> dlm = new DefaultListModel<String>();
 	ArrayList<String> list = new ArrayList<String>();
@@ -69,6 +72,7 @@ public class MainFrame extends JFrame {
 				":( :/ :) :( :/ :) :( :/ :) :( :/ :) :( :/ :) :( :/ :) :( :/ ");
 		sadFaces2.setEditable(false);
 		
+		//format the results text box
 		sadResults = new JTextArea(20,40);
 		sadResults.setLineWrap(true);
 		sadResults.setWrapStyleWord(true);
@@ -101,7 +105,7 @@ public class MainFrame extends JFrame {
 
 		
 		
-		
+		//creates jlist for recommendations
 		jlist.setModel(dlm);
 		jlist.setVisible(false);
 		jlist.setFocusable(true);
@@ -132,13 +136,21 @@ public class MainFrame extends JFrame {
 		 * creates list of options as the user types song name so that they can scroll if 
 		 * they've typed enough
 		 * 
-		 *  need to put words from what they click on in each text box
+		 *  puts words from what they click on in each text box
 		 */
+	
 		songTextBox.addKeyListener(new KeyListener() {
 			
 			
 			@Override
-			public void keyPressed(KeyEvent keyEvent) {
+			public void keyPressed(KeyEvent keyEvent) {		
+		      }
+			
+			@Override
+			public void keyReleased(KeyEvent keyEvent) {
+				if (songTextBox.getText().equals("")) {
+					jlist.setVisible(false);
+				}
 				list.clear();
 				dlm.clear();
 				jlist.clearSelection();
@@ -146,28 +158,51 @@ public class MainFrame extends JFrame {
 				try {
 					list = SongRecommender.createListOfSongs(songTextBox.getText() + " ");
 					
-		
-					if (list.size() > 0) {
+					if ((songTextBox.getText().length() == 0) && (artistTextBox.getText().length() > 0)) {
+						list.clear();
+						list = SongRecommender.createListOfSongs(artistTextBox.getText() + " ");
 						
-						for (String song : list) {
-							String songWithoutNumber = song.substring(song.indexOf(" "));
-							dlm.addElement(songWithoutNumber);
+						if (list.size() > 0) {
+							
+							for (String song : list) {
+								if (song.contains(" by ")) {
+									String[] songAndArtist = song.split(" by ");
+									if (songAndArtist.length == 2) {
+										if (song.substring(song.indexOf("by ") + 2).contains(artistTextBox.getText())) {
+											System.out.println(song);
+											dlm.addElement(song);	
+										}
+									}
+										
+								}
+								
+							}
+							jlist.setVisible(true);
+							jlist.setBackground(Color.WHITE);
 						}
-						jlist.setVisible(true);
-						jlist.setBackground(Color.WHITE);
-					}
 						
-					
+					} else {
+						if (list.size() > 0) {
+							
+							for (String song : list) {
+								String[] songAndArtist = song.split(" by ");
+								if (songAndArtist.length == 2) {
+									if (artistTextBox.getText().length() > 0) {
+										if (song.substring(song.indexOf("by ") + 2).contains(artistTextBox.getText())) {
+											dlm.addElement(song);
+										}
+									} else {
+										dlm.addElement(song);
+									}
+								}
+								
+							}
+							jlist.setVisible(true);
+							jlist.setBackground(Color.WHITE);
+						}
+					}	
 				} catch (IOException e) {
 					songTextBox.setText("Please try again.");
-				}
-				
-		      }
-			
-			@Override
-			public void keyReleased(KeyEvent keyEvent) {
-				if (songTextBox.getText().equals("")) {
-					jlist.setVisible(false);
 				}
 			}
 
@@ -186,13 +221,18 @@ public class MainFrame extends JFrame {
 		 * creates list of options as the user types artist name so that they can scroll if 
 		 * they've typed enough 
 		 * 
-		 * need to put words from what they click on in each text box
 		 */
 		artistTextBox.addKeyListener(new KeyListener() {
 			
 			
 			@Override
 			public void keyPressed(KeyEvent keyEvent) {
+		      }
+			
+			@Override
+			public void keyReleased(KeyEvent keyEvent) {
+				if (artistTextBox.getText().equals("")) {
+				}
 				list.clear();
 				dlm.clear();
 				jlist.clearSelection();
@@ -200,33 +240,53 @@ public class MainFrame extends JFrame {
 				try {
 					list = SongRecommender.createListOfSongs(artistTextBox.getText());
 					
-		
-					if (list.size() > 0) {
+					if ((artistTextBox.getText().length() == 0) && (songTextBox.getText().length() > 0)) {
+						list.clear();
+						list = SongRecommender.createListOfSongs(songTextBox.getText() + " ");
 						
-						for (String song : list) {
-							if (song.contains(" by ")) {
-								if (song.substring(song.indexOf("by ") + 2).contains(artistTextBox.getText())) {
-									String songWithoutNumber = song.substring(song.indexOf(" "));
-									dlm.addElement(songWithoutNumber);
-								}	
-							}
+						
+						if (list.size() > 0) {
 							
+							for (String song : list) {
+								String[] songAndArtist = song.split(" by ");
+								if (songAndArtist.length == 2) {
+									dlm.addElement(song);
+								}
+								
+							}
+							jlist.setVisible(true);
+							jlist.setBackground(Color.WHITE);
 						}
-						jlist.setVisible(true);
-						jlist.setBackground(Color.WHITE);
-					}
+							
 						
+					} else {
+						if (list.size() > 0) {
+							
+							for (String song : list) {
+								if (song.contains(" by ")) {
+									String[] songAndArtist = song.split(" by ");
+									if (songAndArtist.length == 2) {
+										if (song.substring(song.indexOf("by ") + 2).contains(artistTextBox.getText())) {
+											if (songTextBox.getText().length() > 0) {
+												if (song.substring(0, song.indexOf(" by")).contains(songTextBox.getText())) {
+														dlm.addElement(song);	
+												} 
+											} else {
+												dlm.addElement(song);
+											  }
+										}
+									}
+										
+								}
+								
+							}
+							jlist.setVisible(true);
+							jlist.setBackground(Color.WHITE);
+						}
+					}			
 					
 				} catch (IOException e) {
 					artistTextBox.setText("Please try again.");
-				}
-				
-		      }
-			
-			@Override
-			public void keyReleased(KeyEvent keyEvent) {
-				if (artistTextBox.getText().equals("")) {
-					jlist.setVisible(false);
 				}
 			}
 
@@ -237,6 +297,9 @@ public class MainFrame extends JFrame {
 		
 		
 		
+		/**
+		 * puts words from what they click on in each text box when they click on recommendation 
+		 */
 			jlist.addListSelectionListener(new ListSelectionListener() {
 				
 					@Override
@@ -246,7 +309,7 @@ public class MainFrame extends JFrame {
 		            	if (!(jlist.getSelectedValue() == null)) {
 		            		text = jlist.getSelectedValue().toString();
 			            	songAndArtist = text.split(" by ");
-			            	String song = songAndArtist[0].substring(songAndArtist[0].indexOf(" "));
+			            	String song = songAndArtist[0];
 			                songTextBox.setText(song);
 			                artistTextBox.setText(songAndArtist[1]);
 			                artistTextBox.setEditable(true);
@@ -265,7 +328,7 @@ public class MainFrame extends JFrame {
 		 * 
 		 * calls Andrew's classes to pass lyrics from this song to Yang
 		 * 
-		 * tells user how sad the song is
+		 * tells user what emotion this song will evoke 
 		 */
 		button.addActionListener(new ActionListener() {
 
@@ -277,25 +340,15 @@ public class MainFrame extends JFrame {
 				
 				//input these to method that gets lyrics and pass those to Yang and 
 				//get sadness text back
-				
+				System.out.println(list.size());
 				if ((songName.equals("")) || (artistName.equals("")) || (list.isEmpty())) {
 					sadResults.append("We don't recognize that song, please try again.");
 				} else {
 					//temporary resutls until Yang writes method to return this
-					sadResults.append(songName + " by " + artistName +  " is this emotion");
-				}
-				
-				
-				
-				
+					sadResults.append(songName + " by " + artistName +  " is this emotion.");
+				  }
 			}
-			
 		});
-		
-		
-		
-		
-		
 
 	}
 

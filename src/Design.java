@@ -1,5 +1,3 @@
-import java.awt.Color;
-
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -11,7 +9,7 @@ public class Design {
 		
 		SwingUtilities.invokeLater(new Runnable()  {
 			public void run() {
-				JFrame frame = new MainFrame("Song Sadness Scale");
+				JFrame frame = new MainFrame("Song Emotion Scale");
 				frame.setSize(1000,800);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
