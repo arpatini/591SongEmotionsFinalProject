@@ -158,6 +158,7 @@ public class MainFrame extends JFrame {
 				try {
 					list = SongRecommender.createListOfSongs(songTextBox.getText() + " ");
 					
+					
 					if ((songTextBox.getText().length() == 0) && (artistTextBox.getText().length() > 0)) {
 						list.clear();
 						list = SongRecommender.createListOfSongs(artistTextBox.getText() + " ");
@@ -169,7 +170,6 @@ public class MainFrame extends JFrame {
 									String[] songAndArtist = song.split(" by ");
 									if (songAndArtist.length == 2) {
 										if (song.substring(song.indexOf("by ") + 2).contains(artistTextBox.getText())) {
-											System.out.println(song);
 											dlm.addElement(song);	
 										}
 									}
@@ -307,6 +307,7 @@ public class MainFrame extends JFrame {
 						
 		            	String[] songAndArtist = new String[2];
 		            	if (!(jlist.getSelectedValue() == null)) {
+		            		
 		            		text = jlist.getSelectedValue().toString();
 			            	songAndArtist = text.split(" by ");
 			            	String song = songAndArtist[0];
@@ -338,15 +339,36 @@ public class MainFrame extends JFrame {
 				String songName = songTextBox.getText();
 				String artistName = artistTextBox.getText();
 				
-				//input these to method that gets lyrics and pass those to Yang and 
-				//get sadness text back
-				System.out.println(list.size());
-				if ((songName.equals("")) || (artistName.equals("")) || (list.isEmpty())) {
-					sadResults.append("We don't recognize that song, please try again.");
-				} else {
-					//temporary resutls until Yang writes method to return this
-					sadResults.append(songName + " by " + artistName +  " is this emotion.");
-				  }
+				CompareLyrics newCompare = new CompareLyrics();
+				EmotionList emotionList = new EmotionList("emo1.csv");
+				//String lyrics = "So I cross my heart and hope for you";
+				
+				/*
+				 * This part is new: added by @Andrew Pai for testing purposes.
+				 */
+				
+				
+				Search search = new Search();
+		    	
+				try {
+					String lyrics = search.LyricsSearch(songName, artistName);
+					
+					newCompare.mostFrequentEmotions(lyrics, emotionList.emotionDataBase);
+					
+					
+					if ((songName.equals("")) || (artistName.equals("")) || (list.isEmpty())) {
+						sadResults.append("We don't recognize that song, please try again.");
+					} else {
+						//temporary resutls until Yang writes method to return this
+						sadResults.append("The main emotion elicited from " + songName + " by " + artistName + " is " +"\"" 
+										+ newCompare.emotionAnalysis(newCompare.eightEmotionCounts) + "\"!");
+					  }
+				} catch (IOException e1) {
+					sadResults.append("We do not have data on this song, sorry :)");
+				}
+
+				
+				
 			}
 		});
 

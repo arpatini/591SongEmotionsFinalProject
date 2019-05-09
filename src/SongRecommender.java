@@ -13,6 +13,8 @@ public class SongRecommender {
 	 * returns list of songs with their artist when typing in search
 	 * 
 	 * outputs ArrayList<String> to create JList in MainFrame
+	 * 
+	 * written by Andrew and Angela 
 	 */
 	
 	public static ArrayList<String> createListOfSongs(String wordBeingTyped) throws IOException{
