@@ -1,14 +1,23 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
-class EmotionListTest {
 
+/**
+ * This test compares the expected size of the database with the database fed into EmotionList
+ */
+
+class EmotionListTest {
+    
+	ArrayList <EmotionAndWords> emotionDataBase = new ArrayList <>(); 
+	
 	@Test
-	void testInputEmotionList() {
-		EmotionList el = new EmotionList();
-		el.inputEmotionList("emotion.csv");
-		assertEquals(14182, el.emotionDataBase.size());
+	void testEmotionList() {
+		EmotionList el = new EmotionList("emo1.csv");
+		System.out.println(emotionDataBase.size());
+		assertEquals(32389, el.emotionDataBase.size());
 	}
 
 }
