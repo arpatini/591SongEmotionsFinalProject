@@ -93,7 +93,7 @@ public class CompareLyrics {
 			System.out.print(s + " ");
 			System.out.println(eightEmotionCounts.get(s));
 			
-			if (eightEmotionCounts.get(s) > max) {
+			if ((eightEmotionCounts.get(s) > max) && !s.equals("disgust")) {
 				max = eightEmotionCounts.get(s);
 				item = s;
 				

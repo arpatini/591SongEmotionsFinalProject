@@ -38,7 +38,7 @@ public class SongRecommender {
 	        }
 	    }
 	    
-	    if (matchingSongs.size() > 0) {
+	    if (matchingSongs.size() > 1) {
 	    	matchingSongs.remove(0); //first link has pages info 
 		    matchingSongs.remove(matchingSongs.size() - 1); //last link has pages info too
 	    }
