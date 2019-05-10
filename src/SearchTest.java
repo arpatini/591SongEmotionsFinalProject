@@ -1,6 +1,10 @@
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.xml.ws.http.HTTPException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,6 +24,44 @@ class SearchTest {
 		assertEquals(testLyrics,test);
 	}
 
-
-
+	@Test
+	void artistCleanUpTest() {
+		try {
+			Search s = new Search();
+			String testArtist = "The Beatles"; //to see if articles like 'The' and 'A' are removed.
+			String testSong = "Hey Jude";
+			String test = "Hey, Jude, don't make it bad Take a sad song and make it better Remember to let her into your heart Then you can start to make it better Hey, Jude, don't be afraid You were made to go out and get her The minute you let her under your skin Then you begin to make it better And anytime you feel the pain, Hey, Jude, refrain Don't carry the world upon your shoulders For well you know that it's a fool Who plays it cool By making his world a little colder Nah, nah nah, nah nah, nah nah, nah nah Hey, Jude, don't let me down You have found her, now go and get her Remember to let her into your heart Then you can start to make it better So let it out and let it in, Hey, Jude, begin You're waiting for someone to perform with And don't you know that it's just you, Hey, Jude, you'll do The movement you need is on your shoulder Nah, nah nah, nah nah, nah nah, nah nah yeah Hey, Jude, don't make it bad Take a sad song and make it better Remember to let her under your skin Then you'll begin to make it better, better, better, better, better... oh! Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (Jude) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (yeah, yeah, yeah) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (don't make it bad, Jude) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (take a sad song and make it better) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (oh, Jude) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (Jude, hey, Jude, whoa) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (ooh) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude [fade out]";
+			assertEquals(s.LyricsSearch(testSong, testArtist),test);
+			
+		} catch (IOException e) {
+			System.out.println("Mistake?");
+		}
+	}
+	
+	@Test
+	void punctuationCleanUpTest() {
+		try {
+			Search s = new Search();
+			String testArtist = "The Beatles!?@@$!@?"; //to see if punctuation is removed.
+			String testSong = "Hey    Jude"; //to see if spaces are removed.
+			String test = "Hey, Jude, don't make it bad Take a sad song and make it better Remember to let her into your heart Then you can start to make it better Hey, Jude, don't be afraid You were made to go out and get her The minute you let her under your skin Then you begin to make it better And anytime you feel the pain, Hey, Jude, refrain Don't carry the world upon your shoulders For well you know that it's a fool Who plays it cool By making his world a little colder Nah, nah nah, nah nah, nah nah, nah nah Hey, Jude, don't let me down You have found her, now go and get her Remember to let her into your heart Then you can start to make it better So let it out and let it in, Hey, Jude, begin You're waiting for someone to perform with And don't you know that it's just you, Hey, Jude, you'll do The movement you need is on your shoulder Nah, nah nah, nah nah, nah nah, nah nah yeah Hey, Jude, don't make it bad Take a sad song and make it better Remember to let her under your skin Then you'll begin to make it better, better, better, better, better... oh! Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (Jude) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (yeah, yeah, yeah) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (don't make it bad, Jude) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (take a sad song and make it better) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (oh, Jude) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (Jude, hey, Jude, whoa) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude (ooh) Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude Nah, nah nah, nah nah, nah, nah, nah nah, Hey, Jude [fade out]";
+			assertEquals(s.LyricsSearch(testSong, testArtist),test);
+			
+		} catch (IOException e) {
+			System.out.println("Mistake?");
+		}
+	}
+	
+	@Test
+	void invalidSongTest(){
+		try {
+			Search s = new Search();
+			String testArtist = "BTS"; //BTS should redirect to 'bangtan'
+			String testSong = "Boy with Luv";
+			String test = "[Romanized:] Modeun ge gunggeumhae How's your day Oh tell me (oh yah oh yah, oh yah oh yah) Mwoga neol haengbokhage haneunji Oh text me (oh yah oh yah, oh yah oh yah) Your every picture Nae meorimate dugo sipeo Oh bae Come be my teacher Ne modeun geol da gareuchyeojwo Your 1, your 2 Listen my my baby naneun Jeo haneureul nopi nalgo isseo Geuttae niga naege jwossdeon du nalgaero Ije yeogin neomu nopa Nan nae nune neol majchugo sipeo Yeah you makin' me a boy with luv Oh my my my, oh my my my I've waited all my life Ne jeonbureul hamkkehago sipeo Oh my my my, oh my my my Looking for something right Ije jogeumeun na algesseo I want something stronger Than a moment Than a moment love I have waited longer For a boy with For a boy with luv Neol alge doen ihu ya Nae salmeun ontong neo ya Sasohan ge sasohaji anhge Mandeureobeorin neoraneun byeol Hanabuteo yeolkkaji modeun ge teukbyeolhaji Neoui gwansimsa georeumgeori maltuwa Sasohan jageun seupgwandeulkkaji Da malhaji neomu jakdeon Naega yeongungi doen georago (Oh nah) Nan malhaji unmyeong ttawin Cheoeumbuteo nae ge anieossdago (Oh nah) Segyeui pyeonghwa (No way) Geodaehan jilseo (No way) Geujeo neol jikil geoya nan Boy with luv Listen my my baby naneun Jeo haneureul nopi nalgo isseo Geuttae niga naege jwossdeon du nalgaero Ije yeogin neomu nopa Nan nae nune neol majchugo sipeo Yeah you makin' me a boy with luv Oh my my my, oh my my my You got me high so fast Ne jeonbureul hamkkehago sipeo Oh my my my, oh my my my You got me fly so fast Ije jogeumeun na algesseo Love is nothing stronger (I want it) Than a boy with, than a boy with luv Love is nothing stronger Than a boy with, than a boy with luv Tuk kkanohgo malhalge Nado moreuge himi deureogagido haesseo Nopabeorin sky Keojyeobeorin hall Ttaeron domangchige haedallamyeo gidohaesseo But neoui sangcheoneun naui sangcheo Kkaedarasseul ttae na dajimhaessdeongeol Niga jun ikaruseuui nalgaero Taeyangi anin neoegero Let me fly Oh my my my, oh my my my I've waited all my life Ne jeonbureul hamkkehago sipeo Oh my my my, oh my my my Looking for something right Ije jogeumeun na algesseo I want something stronger Than a moment, than a moment love Love is nothing stronger Than a boy with, than a boy with luv [Korean:] 모든 게 궁금해 How's your day Oh tell me (oh yah oh yah, oh yah oh yah) 뭐가 널 행복하게 하는지 Oh text me (oh yah oh yah, oh yah oh yah) Your every picture 내 머리맡에 두고 싶어 Oh bae Come be my teacher 네 모든 걸 다 가르쳐줘 Your 1 your 2 Listen my my baby 나는 저 하늘을 높이 날고 있어 그때 니가 내게 줬던 두 날개로 이제 여긴 너무 높아 난 내 눈에 널 맞추고 싶어 Yeah you makin' me a boy with luv Oh my my my, oh my my my I've waited all my life 네 전부를 함께하고 싶어 Oh my my my, oh my my my Looking for something right 이제 조금은 나 알겠어 I want something stronger Than a moment Than a moment love I have waited longer For a boy with For a boy with luv 널 알게 된 이후 ya 내 삶은 온통 너 ya 사소한 게 사소하지 않게 만들어버린 너라는 별 하나부터 열까지 모든 게 특별하지 너의 관심사 걸음걸이 말투와 사소한 작은 습관들까지 다 말하지 너무 작던 내가 영웅이 된 거라고 (Oh nah) 난 말하지 운명 따윈 처음부터 내 게 아니었다고 (Oh nah) 세계의 평화 (No way) 거대한 질서 (No way) 그저 널 지킬 거야 난 Boy with luv Listen my my baby 나는 저 하늘을 높이 날고 있어 그때 니가 내게 줬던 두 날개로 이제 여긴 너무 높아 난 내 눈에 널 맞추고 싶어 Yeah you makin' me a boy with luv Oh my my my, oh my my my You got me high so fast 네 전부를 함께하고 싶어 Oh my my my, oh my my my You got me fly so fast 이제 조금은 나 알겠어 Love is nothing stronger (I want it) Than a boy with, than a boy with luv Love is nothing stronger Than a boy with, than a boy with luv 툭 까놓고 말할게 나도 모르게 힘이 들어가기도 했어 높아버린 sky 커져버린 hall 때론 도망치게 해달라며 기도했어 But 너의 상처는 나의 상처 깨달았을 때 나 다짐했던걸 니가 준 이카루스의 날개로 태양이 아닌 너에게로 Let me fly Oh my my my, oh my my my I've waited all my life 네 전부를 함께하고 싶어 Oh my my my, oh my my my Looking for something right 이제 조금은 나 알겠어 I want something stronger Than a moment, than a moment love Love is nothing stronger Than a boy with, than a boy with luv [English translation:] I'm curious about everything How's your day Oh tell me (oh yah oh yah, oh yah oh yah) What makes you happy? Oh text me (oh yah oh yah, oh yah oh yah) Your every picture I wanna have it by my pillow Oh bae Come, be my teacher Teach me everything about you Your 1 your 2 Listen my my baby I'm Flying high in the sky (With the two wings you gave me back then) Now, it's so high up here I want you tuned in to my eyes Yeah you makin' me a boy with luv Oh my my my, oh my my my I've waited all my life I want to be with you for everything Oh my my my, oh my my my Looking for something right Now, I kinda get it I want something stronger Than a moment Than a moment love I have waited longer For a boy with For a boy with luv From the moment I met you ya My life was all you ya You're the star That turns ordinaries into extraordinaries One after another, everything is special The things you're interested in, the way you walk or talk, And every little trivial habits of yours Everyone says that I used to be so little and now I became a hero (Oh nah) I say that something like destiny was never my thing (Oh nah) World peace (No way) A great order (No way) I'm just gonna keep you safe Boy with luv Listen my my baby I'm Flying high in the sky (With the two wings you gave me back then) Now, it's so high up here I want you tuned in to my eyes Yeah you makin' me a boy with luv Oh my my my, oh my my my You got me high so fast I want to be with you for everything Oh my my my, oh my my my You got me fly so fast Now, I kinda get it Love is nothing stronger (I want it) Than a boy with, than a boy with luv Love is nothing stronger Than a boy with, than a boy with luv I'll speak very frankly Sometimes I was a little stuck up Elevated sky Expanded hall Sometimes I prayed let me run away But your pain is my pain When I realised that, I vowed to myself With the wings of Icarus you gave me Not toward the sun but toward you Let me fly Oh my my my, oh my my my I've waited all my life I want to be with you for everything Oh my my my, oh my my my Looking for something right Now, I kinda get it I want something stronger Than a moment, than a moment love Love is nothing stronger Than a boy with, than a boy with luv";
+			assertEquals(s.LyricsSearch(testSong, testArtist),test);	
+		} catch (IOException e) {
+			System.out.println("Mistake?");
+		}
+	}
 }
