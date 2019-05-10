@@ -6,6 +6,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.*;
 
+
 public class Search {
 
 	/**
@@ -18,11 +19,20 @@ public class Search {
 	public String LyricsSearch(String songName, String artistName) throws IOException{
 		String lyrics ="";
 		
+		//Artists with articles in their names, like The Beatles, should be stripped of the articles.
+		if (artistName.startsWith("The ")) {
+			artistName = artistName.replaceFirst("The ","");
+		}
+		else if (artistName.startsWith("A ")) {
+			artistName = artistName.replaceFirst("A ","");
+		}
+		
         //We strip song name and artist name of all punctuation
+	
         String songNameClean = songName.replaceAll("[^a-zA-Z0-9]+", "").toLowerCase();
         String artistNameClean = artistName.replaceAll("[^a-zA-Z0-9]+", "").toLowerCase();
         
-	    String searchLink = "https://www.azlyrics.com/lyrics/"+artistNameClean+"/"+songNameClean+".html";	    
+        String searchLink = "https://www.azlyrics.com/lyrics/"+artistNameClean+"/"+songNameClean+".html";	    
 		Document lyricPage = Jsoup.connect(searchLink).get();
 		Elements lyricTags = lyricPage.select("div[class='col-xs-12 col-lg-8 text-center']>div");
 		
@@ -38,7 +48,4 @@ public class Search {
 		}
 		return lyrics;
 	}
-	
-
-
 }
