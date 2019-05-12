@@ -1,0 +1,22 @@
+﻿MCIT 591 Final Project Summary
+
+
+Members: Andrew Pai, Angela Patini, Yang Wu
+
+
+Introduction
+Can you predict if a song is likely to make you feel sad or happy just based on its lyrics? We aim to build a model that predicts the likely emotion brought about by a song. Our GUI-interface will ask its user to search for an artist/song name; once a song is identified, our program will determine what emotion best characterizes a song, using a database which characterizes words of lyrics into different emotions. This has a number of applications, such as in building a song recommender engine to recommend songs based on mood.
+
+
+Overview
+We used the jsoup API (https://jsoup.org/), which allows for easy scraping from any website. The artist, song, and lyrics data, in turn, were obtained from the azlyrics search functionality (https://www.azlyrics.com). 
+The user would use the search function to retrieve the song and artist data.  Once the song and artist info is obtained, the information is then sent again to azlyrics, which would retrieve the lyrics for the song.
+The lyrics are saved as a string, and then the contents of the lyrics are broken down, word-by-word, and analyzed for the emotion it is likely to elicit. The word-to-emotion database is obtained from the Open-Source NRC Emotion Lexicon (https://saifmohammad.com/WebPages/AccessResource.htm), which contains a dictionary of words characterized by their sentiments - anger, fear, anticipation, trust, surprise, sadness, joy, and disgust.
+By counting up the number of words per emotion (we ultimately took out disgust because it skewed our results) we are able to identify what emotion the song is most likely to elicit.
+
+
+Work Breakdown
+* Angela was responsible for the front-end GUI interface that allows the user to search for a song by song name or artist name. 
+* Andrew was responsible for retrieving the lyrics from the specified song and store all of the words in a data structure.
+* Yang was responsible for using the Lexicon database to characterize and divide up the words based off of emotions, eventually outputting the emotion the song is most likely to elicit. 
+Github Link: https://github.com/arpatini/591SongEmotionsFinalProject
